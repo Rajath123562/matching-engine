@@ -6,7 +6,6 @@
 
 [![Language](https://img.shields.io/badge/Language-Pure_C99-00599C?style=for-the-badge&logo=c&logoColor=white)](https://en.wikipedia.org/wiki/C99)
 [![Concurrency](https://img.shields.io/badge/Concurrency-POSIX_Pthreads-F38020?style=for-the-badge)](https://en.wikipedia.org/wiki/Pthreads)
-[![Optimization](https://img.shields.io/badge/Optimization-GCC_-O3-blueviolet?style=for-the-badge)](https://gcc.gnu.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Architecture](https://img.shields.io/badge/Data_Structure-Min%2FMax_Binary_Heaps-brightgreen?style=for-the-badge)](https://github.com/Rajath123562/matching-engine)
 
@@ -24,9 +23,9 @@
 ## 📌 Architectural Highlights
 
 - **Deterministic Sub-Microsecond Execution:** Zero dynamic runtime overhead or GC stop-the-world pauses.
-- **Strict Price-Time Priority ($O(\log N)$):** Dual priority queues utilizing **Min-Heap for Asks** (lowest ask priority) and **Max-Heap for Bids** (highest bid priority) with FIFO timestamp tie-breaking.
+- **Strict Price-Time Priority `O(log N)`:** Dual priority queues utilizing **Min-Heap for Asks** (lowest ask priority) and **Max-Heap for Bids** (highest bid priority) with FIFO timestamp tie-breaking.
 - **Thread-Safe Concurrent Order Ingestion:** Thread-safe ingestion pipelines using POSIX `pthread_mutex` locks preventing race conditions under high-volume multi-trader order injection.
-- **Embedded Quantitative Analytics:** Dynamic on-the-fly computation of **VWAP (Volume-Weighted Average Price)** and dual **Exponential Moving Averages ($EMA_{10}$ and $EMA_{20}$)** with automated trend-inversion signal triggers.
+- **Embedded Quantitative Analytics:** Dynamic on-the-fly computation of **VWAP (Volume-Weighted Average Price)** and dual **Exponential Moving Averages (EMA 10 and EMA 20)** with automated trend-inversion signal triggers.
 - **Live Bloomberg-Style ANSI Dashboard:** 10 Hz flicker-free terminal depth-of-book visualizer streaming real-time bids, asks, spread, executed trade tickets, and trend metrics.
 
 ---
@@ -79,11 +78,11 @@
 
 | Operation | Implementation | Theoretical Complexity | Realized Latency (Simulated) |
 | :--- | :--- | :--- | :--- |
-| **Order Placement** | Binary Heap Insertion (`sift_up`) | $O(\log N)$ | `< 450 ns` |
-| **Best Bid / Ask Lookup** | Root Access (`heap[0]`) | $O(1)$ | `< 12 ns` |
-| **Order Matching & Fill** | Root Extraction (`sift_down`) | $O(\log N)$ | `< 850 ns` |
-| **Volume Weighted Avg (VWAP)** | Incremental Rolling Accumulator | $O(1)$ | `< 25 ns` |
-| **Moving Average Update (EMA)** | Single-pass Recurrence Relation | $O(1)$ | `< 30 ns` |
+| **Order Placement** | Binary Heap Insertion (`sift_up`) | `O(log N)` | `< 450 ns` |
+| **Best Bid / Ask Lookup** | Root Access (`heap[0]`) | `O(1)` | `< 12 ns` |
+| **Order Matching & Fill** | Root Extraction (`sift_down`) | `O(log N)` | `< 850 ns` |
+| **Volume Weighted Avg (VWAP)** | Incremental Rolling Accumulator | `O(1)` | `< 25 ns` |
+| **Moving Average Update (EMA)** | Single-pass Recurrence Relation | `O(1)` | `< 30 ns` |
 
 ---
 
@@ -165,7 +164,7 @@ if (order_a->price == order_b->price && order_a->timestamp < order_b->timestamp)
 ```
 
 ### Exponential Moving Average (EMA) Recurrence
-Rather than re-evaluating historical arrays, the engine updates EMAs with zero-allocation $O(1)$ constant time steps:
+Rather than re-evaluating historical arrays, the engine updates EMAs with zero-allocation `O(1)` constant time steps:
 $$\alpha = \frac{2}{N + 1}$$
 $$EMA_t = (Price_t \times \alpha) + (EMA_{t-1} \times (1 - \alpha))$$
 
